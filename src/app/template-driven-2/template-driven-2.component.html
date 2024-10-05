@@ -27,7 +27,7 @@
         <div class="mb-3">
             <label for="birthday" class="form-label">Enter your birthday</label>
             <input type="date" id="birthday" class="form-control" [(ngModel)]="form.birthday" name="birthday"
-                #birthday="ngModel" max="{{ today }}" required />
+                placeholder="Birthdate" #birthday="ngModel" max="{{ today }}" required />
             <div *ngIf="birthday.errors && birthday.touched" class="text-danger">
                 <small *ngIf="birthday.errors['required']">Birthday is required.</small>
                 <small *ngIf="birthday.errors['max']">Birthday cannot be in the future.</small>
@@ -43,7 +43,7 @@
                     <small *ngIf="pan.errors['required']">PAN field is required</small>
                     <small *ngIf="pan.errors['minlength']">Minimum 10 characters required</small>
                     <small *ngIf="pan.errors['maxlength']">Maximum 10 characters allowed</small>
-                    <small *ngIf="pan.errors['pattern']">PAN must contain only letters and numbers</small>
+                    <small *ngIf="pan.errors['pattern']">Ex. ADFER1234A</small>
                 </div>
             </div>
 
