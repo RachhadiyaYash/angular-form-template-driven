@@ -1,0 +1,85 @@
+<p class="text-primary "> template-driven works!</p>
+
+<div class="container mt-4">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" novalidate>
+
+        <!-- First Name: Required String -->
+        <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" ngModel required
+                pattern="[a-zA-Z ]+" #firstName="ngModel" />
+            <div *ngIf="firstName.invalid && firstName.touched" class="text-danger">
+                First Name is required and must be a valid string.
+            </div>
+        </div>
+
+        <!-- Last Name: Optional -->
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name (Optional)</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" ngModel />
+        </div>
+
+        <!-- Email: Required and Valid -->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" ngModel required
+                pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])"
+                #email="ngModel" />
+            <div *ngIf="email.invalid && email.touched" class="text-danger">
+                Valid Email is required.
+            </div>
+        </div>
+
+        <!-- Mobile: 10-digit only -->
+        <div class="mb-3">
+            <label for="mobile" class="form-label">Mobile</label>
+            <input type="text" class="form-control" id="mobile" name="mobile" ngModel required pattern="[0-9]{10}"
+                #mobile="ngModel" />
+            <div *ngIf="mobile.invalid && mobile.touched" class="text-danger">
+                Mobile must be a 10-digit number.
+            </div>
+        </div>
+
+        <!-- Dropdown from Array -->
+        <div class="mb-3">
+            <label for="dropdown" class="form-label">Select an Option</label>
+            <select class="form-control" id="dropdown" name="dropdown" ngModel required>
+                <option *ngFor="let option of options" [value]="option">{{ option }}</option>
+            </select>
+        </div>
+
+
+        <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="male" name="gender" value="Male" ngModel
+                        required />
+                    <label for="male" class="form-check-label">Male</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="female" name="gender" value="Female" ngModel />
+                    <label for="female" class="form-check-label">Female</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkboxes -->
+        <div class="mb-3">
+            <label class="form-label">Hobbies</label>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="reading" name="hobbies" [value]="'Reading'"
+                    ngModel />
+                <label for="reading" class="form-check-label">Reading</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="traveling" name="hobbies" [value]="'Traveling'"
+                    ngModel />
+                <label for="traveling" class="form-check-label">Traveling</label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">Submit</button>
+    </form>
+</div>

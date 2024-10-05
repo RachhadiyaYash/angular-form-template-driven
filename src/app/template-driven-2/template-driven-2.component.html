@@ -1,0 +1,175 @@
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-4">Template-Driven Form with Validation</h1>
+
+    <form #register="ngForm" (ngSubmit)="register.form.valid && registerFn(register)"
+        class="shadow p-4 rounded bg-light">
+        <div class="mb-3">
+            <label for="fname" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="fname" placeholder="First Name" [(ngModel)]="form.fname"
+                name="fname" #fname="ngModel" required maxlength="32"
+                [ngClass]="{'is-invalid': fname.errors && fname.touched}">
+            <div *ngIf="fname.errors && fname.touched" class="invalid-feedback">
+                <small *ngIf="fname.errors['required']">First Name field is required</small>
+                <small *ngIf="fname.errors['maxlength']">Only 32 characters are allowed.</small>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="lname" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lname" placeholder="Last Name" [(ngModel)]="form.lname"
+                name="lname" #lname="ngModel" required maxlength="32"
+                [ngClass]="{'is-invalid': lname.errors && lname.touched}">
+            <div *ngIf="lname.errors && lname.touched" class="invalid-feedback">
+                <small *ngIf="lname.errors['required']">Last Name field is required</small>
+                <small *ngIf="lname.errors['maxlength']">Only 32 characters are allowed.</small>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="birthday" class="form-label">Enter your birthday</label>
+            <input type="date" id="birthday" class="form-control" [(ngModel)]="form.birthday" name="birthday"
+                #birthday="ngModel" max="{{ today }}" required />
+            <div *ngIf="birthday.errors && birthday.touched" class="text-danger">
+                <small *ngIf="birthday.errors['required']">Birthday is required.</small>
+                <small *ngIf="birthday.errors['max']">Birthday cannot be in the future.</small>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="pan" class="form-label">PAN</label>
+                <input type="text" class="form-control" id="pan" placeholder="PAN" [(ngModel)]="form.pan" name="pan"
+                    #pan="ngModel" required minlength="10" maxlength="10" [pattern]="panRegex"
+                    [ngClass]="{'is-invalid': pan.errors && pan.touched}">
+                <div *ngIf="pan.errors && pan.touched" class="invalid-feedback">
+                    <small *ngIf="pan.errors['required']">PAN field is required</small>
+                    <small *ngIf="pan.errors['minlength']">Minimum 10 characters required</small>
+                    <small *ngIf="pan.errors['maxlength']">Maximum 10 characters allowed</small>
+                    <small *ngIf="pan.errors['pattern']">PAN must contain only letters and numbers</small>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="age" class="form-label">Age</label>
+                <input type="number" class="form-control" id="age" placeholder="Age" [(ngModel)]="form.age" name="age"
+                    #age="ngModel" required min="18" max="60" [ngClass]="{'is-invalid': age.errors && age.touched}">
+                <div *ngIf="age.errors && age.touched" class="invalid-feedback">
+                    <small *ngIf="age.errors['required']">Age field is required</small>
+                    <small *ngIf="age.errors['min'] || age.errors['max']">Age must be between 18 and 60</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="mobile" class="form-label">Mobile</label>
+                <input type="text" class="form-control" id="mobile" placeholder="Mobile" [(ngModel)]="form.mobile"
+                    name="mobile" #mobile="ngModel" required minlength="10" maxlength="10"
+                    [ngClass]="{'is-invalid': mobile.errors && mobile.touched}">
+                <div *ngIf="mobile.errors && mobile.touched" class="invalid-feedback">
+                    <small *ngIf="mobile.errors['required']">Mobile field is required</small>
+                    <small *ngIf="mobile.errors['minlength'] || mobile.errors['maxlength']">Please enter a valid mobile
+                        number.</small>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Email" [(ngModel)]="form.email"
+                    name="email" #email="ngModel" required maxlength="32"
+                    [ngClass]="{'is-invalid': email.errors && email.touched}">
+                <div *ngIf="email.errors && email.touched" class="invalid-feedback">
+                    <small *ngIf="email.errors['required']">Email field is required</small>
+                    <small *ngIf="email.errors['maxlength']">Email should be maximum 32 characters long.</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" placeholder="Enter City" [(ngModel)]="form.city"
+                    name="city" #city="ngModel" required maxlength="32"
+                    [ngClass]="{'is-invalid': city.errors && city.touched}">
+                <div *ngIf="city.errors && city.touched" class="invalid-feedback">
+                    <small *ngIf="city.errors['required']">City is required</small>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="state" class="form-label">State</label>
+                <select id="state" class="form-select" [(ngModel)]="form.state" name="state" required
+                    (change)="onStateChange(form.state)" #state="ngModel">
+                    <option value="" disabled selected>Select State</option>
+                    <option *ngFor="let state of states" [value]="state.state">{{ state.state }}</option>
+                </select>
+                <div *ngIf="state.errors && state.touched" class="invalid-feedback">
+                    <small *ngIf="state.errors['required']">State is required</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="district" class="form-label">District</label>
+            <select id="district" class="form-select" [(ngModel)]="form.district" name="district" required
+                [disabled]="!districts.length" #district="ngModel">
+                <option value="" disabled selected>Select District</option>
+                <option *ngFor="let district of districts" [value]="district">{{ district }}</option>
+            </select>
+            <div *ngIf="district.errors && district.touched" class="invalid-feedback">
+                <small *ngIf="district.errors['required']">District is required</small>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Select preferred exam location</label>
+            <div class="d-md-flex">
+                <div class="form-check me-3">
+                    <input type="radio" name="examLocation" id="Vadodra" value="Vadodra" class="form-check-input"
+                        [(ngModel)]="form.selectedExamLocation" #selectedExamLocation="ngModel" required>
+                    <label for="Vadodra" class="form-check-label">Vadodra</label>
+                </div>
+                <div class="form-check me-3">
+                    <input type="radio" name="examLocation" id="Ahmedabad" value="Ahmedabad" class="form-check-input"
+                        [(ngModel)]="form.selectedExamLocation" #selectedExamLocation="ngModel" required>
+                    <label for="Ahmedabad" class="form-check-label">Ahmedabad</label>
+                </div>
+                <div class="form-check me-3">
+                    <input type="radio" name="examLocation" id="Rajkot" value="Rajkot" class="form-check-input"
+                        [(ngModel)]="form.selectedExamLocation" #selectedExamLocation="ngModel" required>
+                    <label for="Rajkot" class="form-check-label">Rajkot</label>
+                </div>
+                <div class="form-check me-3">
+                    <input type="radio" name="examLocation" id="Jamnagar" value="Jamnagar" class="form-check-input"
+                        [(ngModel)]="form.selectedExamLocation" #selectedExamLocation="ngModel" required>
+                    <label for="Jamnagar" class="form-check-label">Jamnagar</label>
+                </div>
+            </div>
+            <div *ngIf="selectedExamLocation.errors && selectedExamLocation.touched" class="invalid-feedback">
+                <small *ngIf="selectedExamLocation.errors['required']">Please select an exam location.</small>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="uploadedFile">Upload File</label>
+            <input type="file" class="form-control" id="uploadedFile" name="uploadedFile"
+                [(ngModel)]="form.uploadedFile" (change)="
+                onFileSelected($event)" accept=".pdf" #uploadedFile="ngModel" required>
+            <div *ngIf="fileError" class="text-danger">
+                {{ fileError }}
+            </div>
+        </div>
+        <div class="mb-3 d-flex align-items-center">
+            <input type="checkbox" name="isAgrredToTerms" id="isAgrredToTerms" class="form-check-input"
+                [(ngModel)]="form.isAgrredToTerms" #isAgrredToTerms="ngModel" required>
+            <label for="isAgrredToTerms" class="form-check-label px-2">By checking the box you are agreed to the z
+                terms</label>
+            <div *ngIf="isAgrredToTerms.errors && isAgrredToTerms.touched" class="invalid-feedback">
+                <small *ngIf="isAgrredToTerms.errors['required']">Agreement to terms is required</small>
+            </div>
+        </div>
+
+
+        <div class="mb-3">
+            <input type="submit" class="btn btn-success w-100" [disabled]="register.form.status === 'INVALID'" required
+                value="Submit">
+        </div>
+    </form>
+</div>
