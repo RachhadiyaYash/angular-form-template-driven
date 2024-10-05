@@ -50,9 +50,4 @@ This project is a comprehensive Angular application that demonstrates the power 
 - **Dynamic Location Options**: Generating location options dynamically based on state selection, with data fetched from a local JSON file.
 - **Responsive Design**: Ensuring the form's responsiveness across devices using Bootstrap.
 
-## How to Run the Project:
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   ```
