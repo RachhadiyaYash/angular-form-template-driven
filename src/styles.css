@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+/* global.css */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,800|Poppins:300,400,600,900&display=swap');
+
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+p,
+input::placeholder,
+select,
+input,
+button,
+span,
+h1,
+h2,
+h3,
+small,
+h4,
+h5,
+::placeholder,
+h6 {
+    font-family: 'Poppins', sans-serif;
+}
